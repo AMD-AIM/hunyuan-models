@@ -2,25 +2,10 @@
 set -Eeuo pipefail
 
 ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-CONFIG_NAME=${1:?usage: BENCH_ROOT=/path/to/HunyuanOCR-Bench $0 CONFIG.env}
-BENCH_ROOT=${BENCH_ROOT:?set BENCH_ROOT to the pinned HunyuanOCR-Bench checkout}
+PROFILE_ID=${1:?usage: $0 PROFILE_ID}
+PROFILE=$ROOT/profiles/${PROFILE_ID%.json}.json
 PYTHON_BIN=${PYTHON_BIN:-python3}
-EXPECTED_BENCH_COMMIT=1e320ce11a9cfa29f0ffa0f735a103deb1304d43
-
-if [[ "$CONFIG_NAME" == */* ]]; then
-    CONFIG=$CONFIG_NAME
-else
-    CONFIG=$ROOT/configs/$CONFIG_NAME
-fi
-[[ -f "$CONFIG" ]] || { printf 'ERROR: configuration not found: %s\n' "$CONFIG" >&2; exit 1; }
-
-# Repository-controlled configuration files contain only shell assignments.
-source "$CONFIG"
-: "${MACHINE_PROFILE:?missing MACHINE_PROFILE in $CONFIG}"
-: "${HOST:?missing HOST in $CONFIG}"
-: "${PORTS:?missing PORTS in $CONFIG}"
-: "${CONCURRENCY:?missing CONCURRENCY in $CONFIG}"
-: "${RESULT_NAME:?missing RESULT_NAME in $CONFIG}"
+[[ -f "$PROFILE" ]] || { printf 'ERROR: profile not found: %s\n' "$PROFILE" >&2; exit 1; }
 
 for command in git curl jq docker python3; do
     command -v "$command" >/dev/null \
@@ -33,36 +18,24 @@ else
     command -v "$PYTHON_BIN" >/dev/null \
         || { printf 'ERROR: PYTHON_BIN not found: %s\n' "$PYTHON_BIN" >&2; exit 1; }
 fi
+HOST=$(jq -er .accuracy.host "$PROFILE")
+PORTS=$(jq -er '.accuracy.ports | join(",")' "$PROFILE")
+CONCURRENCY=$(jq -er .accuracy.concurrency "$PROFILE")
+MODEL=$(jq -er .runtime.served_model_name "$PROFILE")
 [[ "$CONCURRENCY" =~ ^[1-9][0-9]*$ ]] \
     || { printf 'ERROR: invalid CONCURRENCY: %s\n' "$CONCURRENCY" >&2; exit 1; }
 
-BENCH_ROOT=$(cd "$BENCH_ROOT" && pwd)
-ACTUAL_COMMIT=$(git -C "$BENCH_ROOT" rev-parse HEAD)
-[[ "$ACTUAL_COMMIT" == "$EXPECTED_BENCH_COMMIT" ]] || {
-    printf 'ERROR: expected HunyuanOCR-Bench %s, found %s\n' \
-        "$EXPECTED_BENCH_COMMIT" "$ACTUAL_COMMIT" >&2
-    exit 1
-}
-[[ -z "$(git -C "$BENCH_ROOT" status --porcelain --untracked-files=no)" ]] || {
-    printf 'ERROR: HunyuanOCR-Bench tracked files are modified\n' >&2
-    exit 1
-}
-
-ASSETS_DIR=${ASSETS_DIR:-$BENCH_ROOT/assets}
-WORK_DIR=${WORK_DIR:-$BENCH_ROOT/work}
-MACHINE=$BENCH_ROOT/$MACHINE_PROFILE
-MODEL=tencent/HunyuanOCR
-RUN_ID=${RUN_ID:-accuracy-${RESULT_NAME}-$(date -u +%Y%m%dT%H%M%SZ)}
+ASSETS_DIR=${ASSETS_DIR:-$ROOT/assets}
+WORK_DIR=${WORK_DIR:-$ROOT/work}
+RUN_ID=${RUN_ID:-accuracy-${PROFILE_ID%.json}-$(date -u +%Y%m%dT%H%M%SZ)}
 RUN_DIR=$WORK_DIR/$RUN_ID
 PREDICTIONS=$RUN_DIR/predictions
 
-[[ -f "$MACHINE" ]] \
-    || { printf 'ERROR: machine profile not found: %s\n' "$MACHINE" >&2; exit 1; }
 [[ ! -e "$RUN_DIR" ]] \
     || { printf 'ERROR: run directory already exists: %s\n' "$RUN_DIR" >&2; exit 1; }
 mkdir -p "$RUN_DIR"
 
-PYTHONPATH="$BENCH_ROOT/src" python3 -m hunyuanocr_bench.cli verify-assets \
+python3 "$ROOT/scripts/accuracy_tool.py" verify-assets \
     --assets-dir "$ASSETS_DIR" \
     --output "$RUN_DIR/assets-verification.json"
 
@@ -86,16 +59,16 @@ PYTHONDONTWRITEBYTECODE=1 "$PYTHON_BIN" \
     --repetition-penalty 1.08 \
     --concurrency "$CONCURRENCY"
 
-PYTHONPATH="$BENCH_ROOT/src" python3 -m hunyuanocr_bench.cli verify-predictions \
+python3 "$ROOT/scripts/accuracy_tool.py" verify-predictions \
     --gt "$ASSETS_DIR/data/OmniDocBench_v1_6/OmniDocBench.json" \
     --prediction-dir "$PREDICTIONS" \
     --output "$RUN_DIR/prediction-verification.json"
 
 ASSETS_DIR="$ASSETS_DIR" WORK_DIR="$WORK_DIR" \
-    "$BENCH_ROOT/scripts/run-evaluation.sh" "$RUN_ID"
+    "$ROOT/scripts/run_evaluation.sh" "$RUN_ID"
 SUMMARY=$(<"$RUN_DIR/evaluator-summary.path")
-PYTHONPATH="$BENCH_ROOT/src" python3 -m hunyuanocr_bench.cli accuracy-report \
-    --machine "$MACHINE" \
+python3 "$ROOT/scripts/accuracy_tool.py" accuracy-report \
+    --profile "$PROFILE" \
     --source "$SUMMARY" \
     --output "$RUN_DIR/accuracy.json"
 

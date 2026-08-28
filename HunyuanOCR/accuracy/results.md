@@ -24,13 +24,15 @@ strict protocol result.
 
 ## Evidence
 
-- [RTX 4090 accuracy evidence](https://github.com/zihaomu/HunyuanOCR-Bench/tree/1e320ce11a9cfa29f0ffa0f735a103deb1304d43/results/nvidia-rtx4090-amd-sys-741ge-tnrt/local-evaluator-accuracy-20260826T063000Z-ar)
-- [W7900D canonical result](https://github.com/zihaomu/HunyuanOCR-Bench/blob/1e320ce11a9cfa29f0ffa0f735a103deb1304d43/results/amd-w7900d-gpu1-xw-k8s-test-m-001/amd-w7900d-gpu1-xw-k8s-test-m-001-20260826-quick9-c1-r1/result.json)
-- [Strix Halo c2 accuracy evidence](https://github.com/zihaomu/HunyuanOCR-Bench/tree/1e320ce11a9cfa29f0ffa0f735a103deb1304d43/results/amd-strix-halo-halo3/full1651-c2-accuracy-20260826T065105Z-ar)
-- [R9700 canonical result](https://github.com/zihaomu/HunyuanOCR-Bench/blob/1e320ce11a9cfa29f0ffa0f735a103deb1304d43/results/amd-r9700-workstation-sh/amd-r9700-workstation-sh-20260827T014842Z-ar/result.json)
+- [RTX 4090 accuracy report](./evidence/nvidia-rtx4090/accuracy.json)
+- [W7900D accuracy report](./evidence/amd-w7900d/accuracy.json)
+- [Strix Halo c2 accuracy report](./evidence/amd-strix-halo-c2/accuracy.json)
+- [R9700 accuracy report](./evidence/amd-r9700/accuracy.json)
 
-The source table and evidence are fixed at
-[`HunyuanOCR-Bench@1e320ce`](https://github.com/zihaomu/HunyuanOCR-Bench/tree/1e320ce11a9cfa29f0ffa0f735a103deb1304d43).
+Each evidence directory also contains the asset gate, prediction gate, and raw
+evaluator summary. The files were transferred byte-for-byte from source commit
+`1e320ce11a9cfa29f0ffa0f735a103deb1304d43`; their checksums are recorded in the
+[local evidence manifest](./evidence/manifest.json). Speed artifacts are excluded.
 
 ## Metric Formula
 

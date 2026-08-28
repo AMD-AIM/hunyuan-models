@@ -26,9 +26,9 @@ Use the HunyuanOCR code and weights prepared by the
 GPU inside the recorded image or an equivalent CUDA 13 environment:
 
 ```bash
-BENCH_ROOT=/path/to/HunyuanOCR-Bench
-HUNYUAN_ROOT="$BENCH_ROOT/assets/src/HunyuanOCR"
-MODEL_PATH="$BENCH_ROOT/assets/models/HunyuanOCR"
+ACCURACY_ROOT=$PWD/HunyuanOCR/accuracy
+HUNYUAN_ROOT="$ACCURACY_ROOT/assets/src/HunyuanOCR"
+MODEL_PATH="$ACCURACY_ROOT/assets/models/HunyuanOCR"
 
 MODEL_PATH="$MODEL_PATH" \
 GPU=0 PORT=18081 GPU_MEM_UTIL=0.9 MAX_MODEL_LEN=131072 \
@@ -63,9 +63,8 @@ evaluates it with the portable, protocol-pinned evaluator image.
 From the `hunyuan-models` repository:
 
 ```bash
-BENCH_ROOT=/path/to/HunyuanOCR-Bench \
 PYTHON_BIN=/path/to/hunyuan-runtime/bin/python \
-./HunyuanOCR/accuracy/run.sh nvidia-rtx4090.env
+./HunyuanOCR/accuracy/run.sh nvidia-rtx4090
 ```
 
 The published score used the pinned evaluator source and configuration in a
@@ -76,5 +75,5 @@ tools, but not a complete installation recipe. Therefore this runner does not
 claim byte-for-byte evaluator-runtime provenance with the historical RTX result;
 it uses the reproducible official evaluator image instead.
 
-- [Machine profile](https://github.com/zihaomu/HunyuanOCR-Bench/blob/1e320ce11a9cfa29f0ffa0f735a103deb1304d43/machines/nvidia-rtx4090-amd-sys-741ge-tnrt.json)
-- [Accuracy evidence](https://github.com/zihaomu/HunyuanOCR-Bench/tree/1e320ce11a9cfa29f0ffa0f735a103deb1304d43/results/nvidia-rtx4090-amd-sys-741ge-tnrt/local-evaluator-accuracy-20260826T063000Z-ar)
+- [Machine profile](../profiles/nvidia-rtx4090.json)
+- [Accuracy evidence](../evidence/nvidia-rtx4090/accuracy.json)

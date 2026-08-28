@@ -1,0 +1,36 @@
+{
+  "profile_id": "amd-w7900d",
+  "machine_id": "amd-w7900d-gpu1-xw-k8s-test-m-001",
+  "vendor": "amd",
+  "accelerator": {
+    "model": "AMD Radeon PRO W7900D (gfx1100)",
+    "replicas": 4,
+    "memory_gib_each": 48
+  },
+  "runtime": {
+    "framework": "vLLM",
+    "framework_version": "0.27.0",
+    "served_model_name": "tencent/HunyuanOCR",
+    "container_image": "hunyuanocr-base:rocm7.2.4-v0",
+    "container_image_digest": "sha256:83fef91f42e0306dbf81d2d225086234e7fbc770eeba16a02a9a11f57e17d335",
+    "precision": "bfloat16",
+    "tensor_parallel": 1,
+    "max_model_len": 131072,
+    "max_num_batched_tokens": 131072,
+    "gpu_memory_utilization": 0.9,
+    "environment": {"MIOPEN_FIND_MODE": "2"}
+  },
+  "software": {
+    "os": "Ubuntu 24.04.4 LTS; kernel 6.8.0-134-generic",
+    "driver": "amdgpu 6.16.13",
+    "compute_stack": "ROCm 7.2.4; HIP 7.2.53211; MIOpen 3.5.1",
+    "pytorch": "2.10.0+rocm7.2.4.git3d3aa833"
+  },
+  "accuracy": {
+    "host": "127.0.0.1",
+    "ports": [18016, 18017, 18020, 18021],
+    "physical_gpus": [1, 2, 5, 6],
+    "concurrency": 4,
+    "evidence": "evidence/amd-w7900d"
+  }
+}

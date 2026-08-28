@@ -1,0 +1,95 @@
+{
+  "source_repository": "zihaomu/HunyuanOCR-Bench",
+  "source_commit": "1e320ce11a9cfa29f0ffa0f735a103deb1304d43",
+  "scope": "Accuracy-only evidence; speed summaries and records are excluded.",
+  "files": {
+    "amd-r9700/accuracy.json": {
+      "bytes": 1075,
+      "sha256": "d40cb5e9bcdf4e5e8811c09c7c0ef8cd7f615bb6ebfd0776a6d091cb83caf93f"
+    },
+    "amd-r9700/assets-verification.json": {
+      "bytes": 928,
+      "sha256": "2a3ea3144bd3d984256536e22267243a91614c975bf0bde54cad0582e7cb88ce"
+    },
+    "amd-r9700/evaluator-summary.json": {
+      "bytes": 9688,
+      "sha256": "4fff468e9db10ec3921a0cf2f0fabd88bdaae4150e69405343af43b999398ab3"
+    },
+    "amd-r9700/prediction-verification.json": {
+      "bytes": 884,
+      "sha256": "0d4e820f0b7d1671df9883d262101cf48ee3bdfaa5204fa8cc4eb579bff6e348"
+    },
+    "amd-strix-halo-c2/accuracy.json": {
+      "bytes": 997,
+      "sha256": "057c4a8bccbd6a767e80a85dda506c45cfd5d3c32f6f2932128c831b02419cd7"
+    },
+    "amd-strix-halo-c2/assets-verification.json": {
+      "bytes": 928,
+      "sha256": "2a3ea3144bd3d984256536e22267243a91614c975bf0bde54cad0582e7cb88ce"
+    },
+    "amd-strix-halo-c2/evaluator-summary.json": {
+      "bytes": 9686,
+      "sha256": "f083fc0b22755935c13bc0a8608fc42bccf1ade6c6c9f346c97428ef390a1264"
+    },
+    "amd-strix-halo-c2/prediction-verification.json": {
+      "bytes": 884,
+      "sha256": "2e6ce188d3fccf6857ae097b486830c892e1b8c238383cda425ea6613ad0e66f"
+    },
+    "amd-w7900d/accuracy.json": {
+      "bytes": 1060,
+      "sha256": "cbb635eaf9025205085a11fe28f7a62d20b68b3ca8bf85151047a938f92d6d5a"
+    },
+    "amd-w7900d/assets-verification.json": {
+      "bytes": 928,
+      "sha256": "2a3ea3144bd3d984256536e22267243a91614c975bf0bde54cad0582e7cb88ce"
+    },
+    "amd-w7900d/evaluator-summary.json": {
+      "bytes": 9688,
+      "sha256": "ae50c6e7fa94cd3b717876f137b17e0bc6469c50c4fa0b3bf8e6cd96bfb2fd7a"
+    },
+    "amd-w7900d/inference-summary.json": {
+      "bytes": 575,
+      "sha256": "e9791e52621cdf3eaff131d544e859cb92c8e2f53dd3f0affda25de39ba21954"
+    },
+    "amd-w7900d/prediction-quality.json": {
+      "bytes": 6231,
+      "sha256": "f232e4c035282016fb89104a5d3a6e2d5ef6c4cd0b48f2eb63f42e230d7b2190"
+    },
+    "amd-w7900d/prediction-verification.json": {
+      "bytes": 884,
+      "sha256": "2e6ce188d3fccf6857ae097b486830c892e1b8c238383cda425ea6613ad0e66f"
+    },
+    "nvidia-rtx4090/accuracy.json": {
+      "bytes": 1052,
+      "sha256": "6f8dfd1c60b23b9f345cef6350d034b35005b8f1b7c3f2721c5427ac987f3d5e"
+    },
+    "nvidia-rtx4090/assets-verification.json": {
+      "bytes": 928,
+      "sha256": "2a3ea3144bd3d984256536e22267243a91614c975bf0bde54cad0582e7cb88ce"
+    },
+    "nvidia-rtx4090/evaluator-metric-result.json": {
+      "bytes": 15844,
+      "sha256": "8ec3a4aec126e28084421deac0118292bc6f881e617bc1728d49fd6a71840813"
+    },
+    "nvidia-rtx4090/evaluator-runtime-environment.json": {
+      "bytes": 7214,
+      "sha256": "f6b073a435af72fc53632cbeae493b4bdeec38f9999b4fcdf37467d44acc4192"
+    },
+    "nvidia-rtx4090/evaluator-stage-execution.json": {
+      "bytes": 1247,
+      "sha256": "565e43ad8f1ffd7eee4c774eed44f5f39375c8694b1f4bbfbd78fff91f3fd688"
+    },
+    "nvidia-rtx4090/evaluator-summary.json": {
+      "bytes": 11035,
+      "sha256": "251207ea489f806251acc7f3563069a72e7885a7a0951059df27f1726edb7559"
+    },
+    "nvidia-rtx4090/manifest.json": {
+      "bytes": 2662,
+      "sha256": "23357dea2f73e122f3f158a3df7635d90a105f237eeeae0612ca53da8f50e11c"
+    },
+    "nvidia-rtx4090/prediction-verification.json": {
+      "bytes": 884,
+      "sha256": "0d4e820f0b7d1671df9883d262101cf48ee3bdfaa5204fa8cc4eb579bff6e348"
+    }
+  }
+}

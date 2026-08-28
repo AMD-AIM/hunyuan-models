@@ -28,7 +28,7 @@ start the endpoint with the fixed 16 GiB KV cache used by the accuracy run:
 ## Start Endpoint
 
 ```bash
-BENCH_ROOT=/path/to/HunyuanOCR-Bench
+ACCURACY_ROOT=$PWD/HunyuanOCR/accuracy
 RUNTIME_CACHE=/path/to/vllm-cache
 
 docker run -d --name hunyuanocr-strix-halo-accuracy \
@@ -41,7 +41,7 @@ docker run -d --name hunyuanocr-strix-halo-accuracy \
   -e HF_HOME=/runtime-cache/huggingface -e XDG_CACHE_HOME=/runtime-cache \
   -e HF_HUB_OFFLINE=1 -e TRANSFORMERS_OFFLINE=1 \
   -v "$RUNTIME_CACHE:/runtime-cache" \
-  -v "$BENCH_ROOT/assets/models/HunyuanOCR:/model:ro" \
+  -v "$ACCURACY_ROOT/assets/models/HunyuanOCR:/model:ro" \
   ghcr.io/inferstation/vllm-rocm-halo@sha256:ff89ae6d0cc44eb70b9bada85b535652058c0daf3c2c2c542da844b6f592cae6 \
   --model /model \
   --served-model-name tencent/HunyuanOCR \
@@ -61,14 +61,13 @@ docker run -d --name hunyuanocr-strix-halo-accuracy \
 ## Run Accuracy
 
 ```bash
-BENCH_ROOT=/path/to/HunyuanOCR-Bench \
 PYTHON_BIN=/path/to/hunyuan-runtime/bin/python \
-./HunyuanOCR/accuracy/run.sh amd-strix-halo-c2.env
+./HunyuanOCR/accuracy/run.sh amd-strix-halo-c2
 ```
 
 This run used two request workers on one endpoint. Concurrency 2 differs from
 the strict protocol concurrency 1, so the result is explicitly labeled `c2` and
 is complete comparison evidence rather than a canonical protocol result.
 
-- [Machine profile](https://github.com/zihaomu/HunyuanOCR-Bench/blob/1e320ce11a9cfa29f0ffa0f735a103deb1304d43/machines/amd-strix-halo-halo3.json)
-- [Accuracy evidence](https://github.com/zihaomu/HunyuanOCR-Bench/tree/1e320ce11a9cfa29f0ffa0f735a103deb1304d43/results/amd-strix-halo-halo3/full1651-c2-accuracy-20260826T065105Z-ar)
+- [Machine profile](../profiles/amd-strix-halo-c2.json)
+- [Accuracy evidence](../evidence/amd-strix-halo-c2/accuracy.json)

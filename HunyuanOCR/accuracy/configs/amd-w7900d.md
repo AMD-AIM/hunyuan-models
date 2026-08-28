@@ -29,7 +29,7 @@ placeholders instead of document text.
 ## Start Endpoints
 
 ```bash
-BENCH_ROOT=/path/to/HunyuanOCR-Bench
+ACCURACY_ROOT=$PWD/HunyuanOCR/accuracy
 WORKSPACE=/path/to/hunyuanOCR_workspace
 
 for pair in "1:18016" "2:18017" "5:18020" "6:18021"; do
@@ -46,7 +46,7 @@ for pair in "1:18016" "2:18017" "5:18020" "6:18021"; do
     -e PYTORCH_ROCM_ARCH=gfx1100 \
     -e VLLM_TARGET_DEVICE=rocm \
     -v "$WORKSPACE:/workspace" \
-    -v "$BENCH_ROOT/assets/models/HunyuanOCR:/workspace/models/HunyuanOCR:ro" \
+    -v "$ACCURACY_ROOT/assets/models/HunyuanOCR:/workspace/models/HunyuanOCR:ro" \
     --entrypoint vllm \
     hunyuanocr-base:rocm7.2.4-v0 \
     serve /workspace/models/HunyuanOCR \
@@ -65,10 +65,9 @@ done
 ## Run Accuracy
 
 ```bash
-BENCH_ROOT=/path/to/HunyuanOCR-Bench \
 PYTHON_BIN=/path/to/hunyuan-runtime/bin/python \
-./HunyuanOCR/accuracy/run.sh amd-w7900d.env
+./HunyuanOCR/accuracy/run.sh amd-w7900d
 ```
 
-- [Machine profile](https://github.com/zihaomu/HunyuanOCR-Bench/blob/1e320ce11a9cfa29f0ffa0f735a103deb1304d43/machines/amd-w7900d-gpu1-xw-k8s-test-m-001.json)
-- [Canonical result](https://github.com/zihaomu/HunyuanOCR-Bench/blob/1e320ce11a9cfa29f0ffa0f735a103deb1304d43/results/amd-w7900d-gpu1-xw-k8s-test-m-001/amd-w7900d-gpu1-xw-k8s-test-m-001-20260826-quick9-c1-r1/result.json)
+- [Machine profile](../profiles/amd-w7900d.json)
+- [Accuracy evidence](../evidence/amd-w7900d/accuracy.json)
