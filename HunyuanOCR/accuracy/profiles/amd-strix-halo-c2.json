@@ -1,0 +1,38 @@
+{
+  "profile_id": "amd-strix-halo-c2",
+  "machine_id": "amd-strix-halo-halo3",
+  "vendor": "amd",
+  "accelerator": {
+    "model": "AMD Ryzen AI Max+ 395 w/ Radeon 8060S (gfx1151)",
+    "replicas": 1,
+    "memory_gib_each": 120
+  },
+  "runtime": {
+    "framework": "vLLM",
+    "framework_version": "0.1.dev1+ga1274c75b.d20260807",
+    "served_model_name": "tencent/HunyuanOCR",
+    "container_image": "ghcr.io/inferstation/vllm-rocm-halo:latest",
+    "container_image_digest": "sha256:ff89ae6d0cc44eb70b9bada85b535652058c0daf3c2c2c542da844b6f592cae6",
+    "precision": "bfloat16",
+    "tensor_parallel": 1,
+    "max_model_len": 131072,
+    "max_num_batched_tokens": 131072,
+    "max_num_seqs": 8,
+    "kv_cache_memory_bytes": 17179869184,
+    "skip_mm_profiling": true
+  },
+  "software": {
+    "os": "Ubuntu 24.04.4 LTS; Linux 7.0.0-28-generic",
+    "driver": "amdgpu 7.0.0-28-generic",
+    "compute_stack": "ROCm 7.15.0",
+    "pytorch": "2.14.0a0+rocm7.15.0a20260719"
+  },
+  "accuracy": {
+    "host": "127.0.0.1",
+    "ports": [8000],
+    "physical_gpus": [0],
+    "concurrency": 2,
+    "protocol_deviation": "Request concurrency 2 instead of 1",
+    "evidence": "evidence/amd-strix-halo-c2"
+  }
+}
